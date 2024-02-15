@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { StoriesService } from '../services/stories.service';
-
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-stories',
   templateUrl: './stories.component.html',
   styleUrls: ['./stories.component.scss']
 })
-
 export class StoriesComponent {
   private readonly apiUrl = `https://hacker-news.firebaseio.com/v0`;
   displayedColumns: string[] = ['title', 'details'];
@@ -20,7 +20,8 @@ export class StoriesComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(public storiesService: StoriesService) { }
+  constructor(public storiesService: StoriesService,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.storiesService.getNewestStories().subscribe(async data => {
@@ -56,5 +57,9 @@ export class StoriesComponent {
 
     this.currentStories = await Promise.all(promises);
     this.dataSource = new MatTableDataSource(this.currentStories);
+  }
+
+  openDialog(data: any) {
+    this.dialog.open(DialogComponent, { data });
   }
 }

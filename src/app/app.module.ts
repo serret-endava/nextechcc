@@ -13,11 +13,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoriesComponent } from './stories/stories.component';
+import { DialogComponent } from './stories/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     StoriesComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { StoriesComponent } from './stories/stories.component';
     MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
