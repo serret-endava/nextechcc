@@ -27,12 +27,8 @@ export class StoriesComponent {
     this.storiesService.getNewestStories().subscribe(async data => {
       this.totalItems = data.length;
       this.stories = data;
-      const promises = data.slice(0, 5)
-        .map(x => fetch(`${this.apiUrl}/item/${x}.json`)
-          .then(res => res.json()));
-      this.currentStories = await Promise.all(promises);
-      this.dataSource = new MatTableDataSource(this.currentStories);
-      //this.dataSource.paginator = this.paginator;
+      this.dataSource = new MatTableDataSource(this.stories);
+      this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -44,21 +40,7 @@ export class StoriesComponent {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  async getCurrentStories(event: any) {
-    const skip = this.paginator.pageSize * this.paginator.pageIndex;
-
-    const paged = this.stories.filter((u, i) => i >= skip)
-      .filter((u, i) => i < this.paginator.pageSize);
-
-    const promises = paged
-      .map(x => fetch(`${this.apiUrl}/item/${x}.json`)
-        .then(res => res.json()));
-
-    this.currentStories = await Promise.all(promises);
-    this.dataSource = new MatTableDataSource(this.currentStories);
-  }
-
+  
   openDialog(data: any) {
     this.dialog.open(DialogComponent, { data });
   }
