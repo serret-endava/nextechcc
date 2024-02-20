@@ -9,18 +9,23 @@
     <h1 class="mb-0">Hacker News</h1>
     <h4>Newest stories</h4>
   </div>
-
   <div class="row">
-    <mat-form-field>
+    <mat-form-field class="col-11">
       <mat-label>Search stories</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
         placeholder="Eg. Customer emails leaked"
         #input
+        [disabled]="isLoading"
       />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
+    <div class="col-1">
+      <button mat-fab color="primary" (click)="loadStories()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="row px-3">
@@ -73,6 +78,11 @@
             </td>
           </tr>
         </table>
+
+        <div *ngIf="isLoading" class="d-flex justify-content-center mt-4">
+          <mat-progress-spinner color="primary" mode="indeterminate" diameter="26">
+          </mat-progress-spinner>
+        </div>
 
         <mat-paginator
           [length]="totalItems"
