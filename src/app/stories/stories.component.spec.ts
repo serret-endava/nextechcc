@@ -53,6 +53,12 @@ describe('StoriesComponent', () => {
     expect(component).toBeDefined();
   });
 
+  it('should retrieve stories on init', () => {
+    spyOn(component, 'loadStories');
+    component.ngOnInit()
+    expect(component.loadStories).toHaveBeenCalled();
+  })
+
   it('should have <h1> with "Hacker News" and subtitle', () => {
     const headerElement: HTMLElement = fixture.nativeElement;
     const h1 = headerElement.querySelector('h1')!;
